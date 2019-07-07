@@ -31,6 +31,7 @@ import com.openkm.core.AccessDeniedException;
 import com.openkm.core.Config;
 import com.openkm.core.DatabaseException;
 import com.openkm.core.MimeTypeConfig;
+import com.openkm.core.RepositoryException;
 import com.openkm.dao.AuthDAO;
 import com.openkm.dao.ProfileDAO;
 import com.openkm.dao.bean.Profile;
@@ -44,6 +45,9 @@ import com.openkm.servlet.frontend.ChatServlet;
 import com.openkm.util.SecureStore;
 import com.openkm.util.UserActivity;
 import com.openkm.util.WebUtils;
+import com.openkm.validator.ValidatorException;
+import com.openkm.validator.ValidatorFactory;
+import com.openkm.validator.password.PasswordValidator;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -102,7 +106,9 @@ public class AuthServlet extends BaseServlet {
 					userList(userId, request, response);
 				} else if (action.equals("validateUser")) {
 					validateUser(request, response);
-				} else if (action.equals("validateRole")) {
+				} else if (action.equals("validatePassword")) {
+					validatePassword(request, response);
+				}else if (action.equals("validateRole")) {
 					validateRole(request, response);
 				} else if (action.endsWith("Export")) {
                     export(request, response, action);
@@ -197,6 +203,30 @@ public class AuthServlet extends BaseServlet {
 			out.print("{ \"success\": false, \"message\": \"Id already taken.\" }");
 		}
 
+		out.flush();
+		out.close();
+	}
+	
+	/**
+	 * Validate password
+	 */
+	private void validatePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException, DatabaseException {
+		String value = WebUtils.getString(request, "value");
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/json");
+		
+		try {
+			PasswordValidator  passwordValidator = ValidatorFactory.getPasswordValidator();
+			try {
+				passwordValidator.Validate(value);
+				out.print("{ \"success\"}: true }");
+			} catch (ValidatorException e) {
+				out.print("{ \"success\": false, \"message\": " + "\"" + e.getMessage().replace(":", "") + "\"" + "}");
+			}
+		} catch (RepositoryException e) {
+			out.print("{ \"success\": false, \"message\": \"Invalid Password, Please contact support team.\" }");
+		}
 		out.flush();
 		out.close();
 	}
