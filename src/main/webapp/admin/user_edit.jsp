@@ -82,7 +82,7 @@
             <td>
               <c:choose>
                 <c:when test="${action == 'userCreate'}">
-                  <input class=":required :only_on_blur" type="password" name="usr_password" id="usr_password" value="" autocomplete="off"/>
+                  <input class=":required :only_on_blur :ajax;Auth?action=validatePassword" type="password" name="usr_password" id="usr_password" value="" autocomplete="off"/>
                 </c:when>
                 <c:otherwise>
                   <input class="" type="password" name="usr_password" id="usr_password" value="" autocomplete="off"/>
