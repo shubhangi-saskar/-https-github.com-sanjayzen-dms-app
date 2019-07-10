@@ -142,18 +142,7 @@
   <title><%=Config.TEXT_TITLE%></title>
 </head>
 <body onload="document.forms[0].elements[0].focus()">
-  <div id="openkmNews" class="openkm-news">
-    <div id="openkmVersion" class="openkm-version">
-      <strong>Community Version customized by Sanjay Zende</strong>
-      <div id="stickerController" class="openkm-sticker" style="display:none;">
-        <a href="#" id="backward" style="cursor:hand !important;"><img src="img/backward.png" alt="Backward" title="Backward" /></a>
-        <a href="#" id="stop" style="cursor:hand !important;"><img id="stopImg" src="img/stop.png" alt="Stop" title="Stop"/></a>
-        <a href="#" id="forward" style="cursor:hand !important;"><img src="img/forward.png" alt="Forward" title="Forward" /></a>
-        <a href="#" id="eye" style="cursor:hand !important;"><img id="eyeImg" src="img/eye.png" alt="Show / hide news" title="Show / hide news" /></a>
-      </div>
-    </div>
-    <div style="display:none;" id="feedContainer" class="vticker"></div>
-  </div>
+  
   
   <div id="login-background" class="background-zen">
     <div id="col-xs-12" class="hidden-xs hidden-sm hidden-md" style="height:100%;">
